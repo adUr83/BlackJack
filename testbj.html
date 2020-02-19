@@ -79,10 +79,12 @@
         "🃞"
       ];
       let deck = [];
-      const player = [];
-      const dealer = [];
-      let round = 0;
+      // 5.1
+      const player = [],
+        dealer = [];
+      // 5.2
       let outputArea = document.getElementById("output-area");
+      let round = 0;
       /**####### FONKSİYONLAR ######## **/
       /**
        * Desteyi karıştıran fonksıyon
@@ -103,24 +105,6 @@
         }
         deck = tempArray;
       };
-      /**
-       * 2 oyuncu için 4 kart çeker ve oynanan el sayısını arttırır.
-       * Eğer destenin uzunluğu yeterli değilse oyunu dururur
-       * @param null
-       * $return Array
-       */
-      const drawCard = () => {
-        round++;
-        if (deck.length > 4) {
-          let handCards = {
-            player: [deck[0], deck[1]],
-            dealer: [deck[2], deck[3]]
-          };
-          deck.splice(0, 4);
-          return handCards;
-        }
-        return false;
-      };
 
       /**
        *
@@ -129,37 +113,53 @@
       const getShowHandsTemplate = (player, dealer) => {
         return `
           <h2> Player</h2>
-          <span class="handCard" >${player[0]}</span>
+          <span class="handCard">${player[0]}</span>
           <span class="handCard">${player[1]}</span>
           <h2> Dealer </h2>
           <span class="handCard">${dealer[0]}</span>
           <span class="handCard">${dealer[1]}</span>
         `;
       };
-      /*
-      drawCard = () => {
+
+      const drawCard = () => {
         let draw = deck.shift();
         return draw;
-      };*/
+      };
 
-      /**
-       * Elleri gösteren fonksiyon
-       * @param null
-       * @return null
-       **/
-      const showHands = (hand, score) => {
-        // Eğer oynanacak el var ise kartları ekrana yansıt
-        let draw = drawCard();
-        if (draw !== false) {
-          let { player, dealer } = draw;
-          outputArea.innerHTML = getShowHandsTemplate(player, dealer);
-        }
+      // 5.4
+      const showHands = () => {
+        // 5.5
+        let playerCards = "";
+        player.forEach(
+          c => (playerCards += `<span class="handCard">${c}</span>`)
+        );
+
+        // 5.6
+        let dealerCards = "";
+        dealer.forEach(
+          c => (dealerCards += `<span class="handCard">${c}</span>`)
+        );
+
+        // 5.7
+        outputArea.innerHTML = playerCards + " " + dealerCards;
+      };
+
+      // 5.8
+      const dealInitialCards = () => {
+        // 5.9
+        [1, 2].forEach(() => player.push(drawCard()));
+        // 5.10
+        [1, 2].forEach(() => dealer.push(drawCard()));
+
+        // 5.11
+        showHands();
       };
 
       /**####### FONKSİYONLAR ######## **/
       shuffleDeck();
-      let hands = showHands();
-      let deal = dealInitialCards();
+      dealInitialCards();
+      // let hands = showHands();
+      // let deal = dealInitialCards();
     </script>
   </body>
 </html>
