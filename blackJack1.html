@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Blackjack</title>
+  </head>
+  <body>
+    <h1>Blackjackto</h1>
+    <div id="output-area"></div>
+    <button type="text" id="new-game-button">New Game!</button>
+    <button type="text" id="hit-button">Hit!</button>
+    <button type="text" id="stay-button">Stay</button>
+    <div id="winner-area"></div>
+
+    <div style="font-size:5em" id="ornek"></div>
+    <script>
+      let cards = [
+        "🂡",
+        "🂢",
+        "🂣",
+        "🂤",
+        "🂥",
+        "🂦",
+        "🂧",
+        "🂨",
+        "🂩",
+        "🂪",
+        "🂫",
+        "🂬",
+        "🂮",
+        "🂱",
+        "🂲",
+        "🂳",
+        "🂴",
+        "🂵",
+        "🂶",
+        "🂷",
+        "🂸",
+        "🂹",
+        "🂺",
+        "🂻",
+        "🂼",
+        "🂾",
+        "🃁",
+        "🃂",
+        "🃃",
+        "🃄",
+        "🃅",
+        "🃆",
+        "🃇",
+        "🃈",
+        "🃉",
+        "🃊",
+        "🃋",
+        "🃍",
+        "🃎",
+        "🃑",
+        "🃒",
+        "🃓",
+        "🃔",
+        "🃕",
+        "🃖",
+        "🃗",
+        "🃘",
+        "🃙",
+        "🃚",
+        "🃛",
+
+        "🃝",
+        "🃞"
+      ];
+      var deck = [];
+      function shuffleDeck() {
+        let tmpDeck[]=cards.slice();
+        while (tmpDeck.length!=0) {
+            let pos =tmpDeck[Math.random()*tmpDeck.length]
+        }
+      }
+
+      let ornek = document.getElementById("ornek");
+      for (let i = 0; i < cards.length; i++) {
+        ornek.innerHTML += cards[i];
+      }
+      ornek.innerHTML += "<hr/>";
+      for (let i = 0; i < deck.length; i++) {
+        ornek.innerHTML += deck[i];
+      }
+    </script>
+  </body>
+</html>

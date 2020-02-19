@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Blackjack</title>
+    <style>
+      .handCard {
+        font-size: 120px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Blackjackto</h1>
+    <div id="output-area"></div>
+    <button type="text" id="new-game-button">New Game!</button>
+    <button type="text" id="hit-button">Hit!</button>
+    <button type="text" id="stay-button">Stay</button>
+    <div id="winner-area"></div>
+
+    <div style="font-size:5em" id="ornek"></div>
+    <script>
+      "use strict";
+
+      const cards = [
+        "🂡",
+        "🂢",
+        "🂣",
+        "🂤",
+        "🂥",
+        "🂦",
+        "🂧",
+        "🂨",
+        "🂩",
+        "🂪",
+        "🂫",
+        "🂬",
+        "🂮",
+        "🂱",
+        "🂲",
+        "🂳",
+        "🂴",
+        "🂵",
+        "🂶",
+        "🂷",
+        "🂸",
+        "🂹",
+        "🂺",
+        "🂻",
+        "🂼",
+        "🂾",
+        "🃁",
+        "🃂",
+        "🃃",
+        "🃄",
+        "🃅",
+        "🃆",
+        "🃇",
+        "🃈",
+        "🃉",
+        "🃊",
+        "🃋",
+        "🃍",
+        "🃎",
+        "🃑",
+        "🃒",
+        "🃓",
+        "🃔",
+        "🃕",
+        "🃖",
+        "🃗",
+        "🃘",
+        "🃙",
+        "🃚",
+        "🃛",
+
+        "🃝",
+        "🃞"
+      ];
+      let deck = [];
+      const player = [];
+      const dealer = [];
+      let round = 0;
+      let outputArea = document.getElementById("output-area");
+      /**####### FONKSİYONLAR ######## **/
+      /**
+       * Desteyi karıştıran fonksıyon
+       * @param null
+       * return null
+       */
+      const shuffleDeck = () => {
+        let tempArray, tempDeck;
+        tempArray = [];
+        tempDeck = [...cards]; // tüm kartlar burda
+
+        while (tempDeck.length > 0) {
+          let cardLength = tempDeck.length - 1;
+          let pos = Math.floor(Math.random() * cardLength);
+          let card = tempDeck[pos];
+          tempArray.push(card);
+          tempDeck.splice(pos, 1); // splice ( bu indexten itibaren , bu kadar adet sil)
+        }
+        deck = tempArray;
+      };
+      /**
+       * 2 oyuncu için 4 kart çeker ve oynanan el sayısını arttırır.
+       * Eğer destenin uzunluğu yeterli değilse oyunu dururur
+       * @param null
+       * $return Array
+       */
+      const drawCard = () => {
+        round++;
+        if (deck.length > 4) {
+          let handCards = {
+            player: [deck[0], deck[1]],
+            dealer: [deck[2], deck[3]]
+          };
+          deck.splice(0, 4);
+          return handCards;
+        }
+        return false;
+      };
+
+      /**
+       *
+       *Ekranda gösterilen kartlar için template oluşturan fonksiyon
+       */
+      const getShowHandsTemplate = (player, dealer) => {
+        return `
+          <h2> Player</h2>
+          <span class="handCard" >${player[0]}</span>
+          <span class="handCard">${player[1]}</span>
+          <h2> Dealer </h2>
+          <span class="handCard">${dealer[0]}</span>
+          <span class="handCard">${dealer[1]}</span>
+        `;
+      };
+      /*
+      drawCard = () => {
+        let draw = deck.shift();
+        return draw;
+      };*/
+
+      /**
+       * Elleri gösteren fonksiyon
+       * @param null
+       * @return null
+       **/
+      const showHands = (hand, score) => {
+        // Eğer oynanacak el var ise kartları ekrana yansıt
+        let draw = drawCard();
+        if (draw !== false) {
+          let { player, dealer } = draw;
+          outputArea.innerHTML = getShowHandsTemplate(player, dealer);
+        }
+      };
+
+      /**####### FONKSİYONLAR ######## **/
+      shuffleDeck();
+      let hands = showHands();
+      let deal = dealInitialCards();
+    </script>
+  </body>
+</html>
