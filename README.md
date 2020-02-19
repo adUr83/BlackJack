@@ -1,18 +1,16 @@
 # BlackJack
 
-05 - Elleri Göster
-Artık desteyi karıştırıp ondan kart çekebileceğinize göre, oyuncu ve dağıtıcı için ilk iki kartı çeken ve tarayıcıda görüntüleyen işlevsellik ekleme zamanı gelmiştir.
+06 — Elleri Göster fonksiyonunun yeniden düzenlenmesi
+Şimdi, herhangi bir eli gösterebilmek için ShowHands fonksiyonundaki birkaç tekrarlanan adımı yeniden düzenleyin.
 
-1. Deck dizisinin altına dealer ve player adı verilen iki boş dizi ekleyin.
-2. output-area alanını, az önce eklediğiniz iki dizinin altındaki outputArea adlı bir değişkende önbelleğe alın. Bir öğenin önbelleğe alınması, tarayıcı her zaman DOM'daki öğeyi aramak zorunda olmadığından performansı artırabilir.
-3. Tarayıcıda veri görüntüleyen JS dosyasının sonundaki kodu kaldırın.
-4. JS dosyasının sonunda hiçbir parametresi olmayan showHands adlı yeni bir fonksiyon ekleyin.
-5. Fonksiyonun içinde, player dizisinin üzerine gelin ve her kartın karakterini (kartın card özelliğinden) playerCards adlı bir string değişkene ekleyin.
-6. Dealer dizisi için önceki adımı tekrarlayın ve sonucu dealerCards adlı bir string değişkende saklayın.
-7. dealerCards stringini, arasında yeni satır karakteri olan playerCards stringi birleştirin ve daha önce oluşturduğunuz outputArea değişkenini kullanarak sonucu görüntüleyin.
-8. showHands işlevinin altında parametresi olmayan dealInitialCards adlı başka bir fonksiyon oluşturun.
-9. Fonksiyon içinde, dealer için drawCard işlevini iki kez çağırın ve kartları player dizisine ekleyin.
-10. Player dizisi için önceki adımı tekrarlayın.
-
-11. dealInitialCards fonksiyonunun sonunda oluşturduğunuz ShowHands fonksiyonunu çağırın.
-12. İşlevin altındaki dealInitialCards fonksiyonunu çağırın. Kodu kaydedin ve tarayıcının dealer için iki kart ve player için iki kart gösterdiğini doğrulayın.
+1. ShowHands fonksiyonunu ShowHand olarak yeniden adlandırın ve iki parametre ekleyin: hand and score. Daha sonra her elin değerini hesaplarken score parametresini kullanırsınız.
+2. playerCards ve dealerCards değişkenlerini cards isimli bir degiskenle değiştirin.
+3. dealer dizisi üzerinden yinelenen döngüyü silin.
+4. hand parametresi üzerinde yineleme yapmak ve kartları cards değişkeninde saklamak için player dizisi üzerinden yineleme döngüsünü değiştirin.
+5. cards dizesini bir boşluk karakteri ve score parametresindeki değerle birleştirin ve dizenin sonuna yeni satır karakteri ekleyin. Değeri, outputArea öğesinde zaten var olan değerle birleştirerek sonucu görüntüleyin.
+6. Değiştirilen ShowHand fonksiyonunu çağırmak için delaer dizisini ve skor parametresi için null değerini iletmek üzere ShowHands fonksiyon çağrısını değiştirin.
+7. ShowHand fonksiyonuna başka bir çağrı ekleyin ve player dizisini ve null değerini iletin.
+8. Eller görüntülenmeden önce oyun tablosunu temizlemek için ClearTable adında parametresiz yeni bir fonksiyon ekleyin. Bunu yapmazsanız, bir sonraki el mevcut elin bir parçası olur.
+9. outputArea öğesine boş bir string atayın.
+10. dealInitialCards fonksiyonunun üst kısmındaki ClearTable fonksiyonunu çağırın.
+11. Tüm değişiklikleri kaydedin ve tarayıcının, kartları player ve dealer ellerinde olduğu gibive kartların yanında null değer bulunduğunu doğrulayın.
