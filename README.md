@@ -1,8 +1,10 @@
 # BlackJack
+
 05 - Elleri Göster
 Artık desteyi karıştırıp ondan kart çekebileceğinize göre, oyuncu ve dağıtıcı için ilk iki kartı çeken ve tarayıcıda görüntüleyen işlevsellik ekleme zamanı gelmiştir.
+
 1. Deck dizisinin altına dealer ve player adı verilen iki boş dizi ekleyin.
-2. <div> output-area alanını, az önce eklediğiniz iki dizinin altındaki outputArea adlı bir değişkende önbelleğe alın. Bir öğenin önbelleğe alınması, tarayıcı her zaman DOM'daki öğeyi aramak zorunda olmadığından performansı artırabilir.
+2. output-area alanını, az önce eklediğiniz iki dizinin altındaki outputArea adlı bir değişkende önbelleğe alın. Bir öğenin önbelleğe alınması, tarayıcı her zaman DOM'daki öğeyi aramak zorunda olmadığından performansı artırabilir.
 3. Tarayıcıda veri görüntüleyen JS dosyasının sonundaki kodu kaldırın.
 4. JS dosyasının sonunda hiçbir parametresi olmayan showHands adlı yeni bir fonksiyon ekleyin.
 5. Fonksiyonun içinde, player dizisinin üzerine gelin ve her kartın karakterini (kartın card özelliğinden) playerCards adlı bir string değişkene ekleyin.
