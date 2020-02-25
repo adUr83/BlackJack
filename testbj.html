@@ -126,33 +126,41 @@
         return draw;
       };
 
-      // 5.4
-      const showHands = () => {
-        // 5.5
-        let playerCards = "";
+      // 6.1
+      const showHand = (hand, score) => {
+        // 6.2
+        let cards = "";
+        // 6.4
         player.forEach(
-          c => (playerCards += `<span class="handCard">${c}</span>`)
+          // 6.5-1
+          // c => (cards += `<span class="handCard">${c} ${score}</span>`)
+          c => (cards += c + score)
         );
 
-        // 5.6
-        let dealerCards = "";
-        dealer.forEach(
-          c => (dealerCards += `<span class="handCard">${c}</span>`)
-        );
+        // 6.5-2
+        outputArea.innerHTML += "<br/>" + cards;
+      };
 
-        // 5.7
-        outputArea.innerHTML = playerCards + " " + dealerCards;
+      // 6.8
+      const clearTable = () => {
+        // 6.9
+        outputArea.innerHTML = "";
       };
 
       // 5.8
       const dealInitialCards = () => {
+        // 6.10
+        clearTable();
+
         // 5.9
         [1, 2].forEach(() => player.push(drawCard()));
         // 5.10
         [1, 2].forEach(() => dealer.push(drawCard()));
 
-        // 5.11
-        showHands();
+        // 6.6
+        showHand(dealer, null);
+        // 6.7
+        showHand(player, null);
       };
 
       /**####### FONKSİYONLAR ######## **/
