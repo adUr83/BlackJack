@@ -90,16 +90,31 @@
       const dealer = [];
       // 5.2
       let outputArea = document.getElementById("output-area");
+      let winnerArea = document.getElementById("winner-area");
 
       // 8.1
       let btnStartNewGame = document.getElementById("new-game-button");
       let btnHit = document.getElementById("hit-button");
       let btnStay = document.getElementById("stay-button");
 
+      btnStay.addEventListener("click", function() {
+        hideGameButtons();
+
+        while (
+          dealerScore < playerScore &&
+          playerScore <= 21 &&
+          dealerScore <= 21
+        ) {
+          dealer.push(drawCard());
+          calculateHands();
+        }
+        ShowHands(true);
+      });
       // 7.7-1
       let playerScore = 0;
       // 7.8-2
       let dealerScore = 0;
+      hideGameButtons();
       let round = 0;
       /**####### FONKSİYONLAR ######## **/
       /**
@@ -122,19 +137,82 @@
         deck = tempArray;
       };
 
+      const determineWinner = stayed => {
+        const dealerWins = "Dealer Wins!",
+          playerWins = "You win!,",
+          draw = "Draw";
+
+        // kimin sayısı 21'i geçtiyse kazananı ilan et
+        if (isBust(playerScore)) {
+          return dealerWins;
+        } else if (isBust(dealerScore)) {
+          return playerWins;
+        } else if (dealer.length == 5 && dealerScore <= 21) {
+          return dealerWins;
+        }
+
+        if (!stayed) return "";
+
+        // Kimde blackjack varsa değerlendir
+        let dealerBJ = hasBlackJack(dealer, dealerScore);
+        let playerBJ = hasBlackJack(player, playerScore);
+
+        if (playerBJ && dealerBJ) {
+          return draw;
+        }
+
+        if (playerBJ) {
+          return playerWins;
+        }
+
+        if (dealerBJ) {
+          return dealerWins;
+        }
+
+        // blackjack yok puanlara göre değerlendir
+        if (dealerScore == playerScore) {
+          return draw;
+        } else if (playerScore > dealerScore) {
+          return playerWins;
+        } else if (playerScore < dealerScore) {
+          return dealerWins;
+        }
+
+        return "";
+      };
+
+      const showGameButtons = () => {
+        btnStartNewGame.style.display = "none";
+        btnHit.style.display = "inline";
+        btnStay.style.display = "inline";
+      };
+
+      function hideGameButtons() {
+        btnStartNewGame.style.display = "inline";
+        btnHit.style.display = "none";
+        btnStay.style.display = "none";
+      }
+
+      const isBust = score => {
+        return score > 21;
+      };
+
+      const hasBlackJack = (hand, score) => {
+        return hand.length == 2 && calculateHand(hand) == 21;
+      };
       /**
        *
        *Ekranda gösterilen kartlar için template oluşturan fonksiyon
        */
       const getShowHandsTemplate = (player, dealer) => {
         return `
-        <h2> Player</h2>
-        <span class="handCard">${player[0]}</span>
-        <span class="handCard">${player[1]}</span>
-        <h2> Dealer </h2>
-        <span class="handCard">${dealer[0]}</span>
-        <span class="handCard">${dealer[1]}</span>
-      `;
+              <h2> Player</h2>
+              <span class="handCard">${player[0]}</span>
+              <span class="handCard">${player[1]}</span>
+              <h2> Dealer </h2>
+              <span class="handCard">${dealer[0]}</span>
+              <span class="handCard">${dealer[1]}</span>
+            `;
       };
 
       const drawCard = () => {
@@ -150,10 +228,10 @@
         hand.forEach(
           // 6.5-1
           // c => (cards += `<span class="handCard">${c} ${score}</span>`)
-          c => (cards += `<span class="handCard">${c.card}</span>` + score)
+          c => (cards += `<span class="handCard">${c.card}</span>`)
         );
 
-        return cards;
+        return cards + score;
       };
 
       //7.1
@@ -165,10 +243,10 @@
         cards.forEach(c => (score += c.value));
 
         // 7.3-1
-        let sonuc = cards.find(c => c.value === 1);
+        let ace = cards.find(c => c.value === 1);
 
         // 7.3-2
-        if (sonuc) {
+        if (ace) {
           // blackjack var
           // 7.5
           if (10 < score && score < 21) {
@@ -200,10 +278,7 @@
 
       // 8.3
       const startNewGame = () => {
-        // 8.4
-        btnStartNewGame.style.display = "none";
-        btnHit.style.display = "block";
-        btnStay.style.display = "block";
+        showGameButtons();
         // 8.5
         deck.length = 0;
         player.length = 0;
@@ -219,14 +294,24 @@
         hand.push(drawCard());
       };
 
-      const ShowHands = () => {
-        clearTable();
-
+      const calculateHands = () => {
         playerScore = calculateHand(player);
         dealerScore = calculateHand(dealer);
+      };
+
+      const ShowHands = (stayed = false) => {
+        clearTable();
+        calculateHands();
 
         outputArea.innerHTML += ShowHand(player, playerScore);
+        outputArea.innerHTML += "<br/>";
         outputArea.innerHTML += ShowHand(dealer, dealerScore);
+
+        let winner = determineWinner(stayed);
+        winnerArea.innerHTML = winner;
+        if (winner) {
+          hideGameButtons();
+        }
       };
     </script>
   </body>
